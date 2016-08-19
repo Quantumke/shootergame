@@ -44,6 +44,31 @@ class TheGame(arcade.Window):
 		self.all_sprites_list.draw()
 		score= "Score:{}".format(self.score)
 		arcade.draw_text(score, 10, 20 , arcade.color.WHITE, 14)
+	def on_mouse_press(self, x, y, button, modifiers):
+		arcade.set_backgroung_color(arcade.WHITE 6)
+		bullet= RamboBullets("img/taget.png", SPRITE_SCALING * 1.5)
+		start_x=self.player_sprite.center_x
+		start_y=self.player_sprite.center_y
+		bullet.center_x=start_x
+		bullet.center_y=start_y
+
+		#aim from mouse
+		dest_x=x
+		dest_y=y
+
+		#get angle of bullet
+		x_diff= dest_x - start_x
+		y_diff= dest_y - start_y
+		angle= math.atan2(y_diff, x_diff)
+		print ("Bullet angle:{: .2f}". format(bullet.angle))
+		bullet.angle = math.degrees(angle)
+		bullet.change_x = math.cos(angle) * BULLET_SPEED
+		bullet.change_y= math.sin(angle) * BULLET_SPEED
+
+		self.all_sprites_list.append(Bullet)
+		self.bullet_list.append(bullet)
+		
+
 
 
 
