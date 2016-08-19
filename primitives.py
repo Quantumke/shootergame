@@ -39,5 +39,11 @@ class TheGame(arcade.Window):
 			self.target_list.append(taget)
 
 			arcade.set_backgroung_color(arcade.AMAZON)
+	def on_draw(self):
+		arcade.start_render()
+		self.all_sprites_list.draw()
+		score= "Score:{}".format(self.score)
+		arcade.draw_text(score, 10, 20 , arcade.color.WHITE, 14)
+
 
 
