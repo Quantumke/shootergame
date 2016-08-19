@@ -29,14 +29,14 @@ class TheGame(arcade.Window):
 		self.all_sprites_list.append(self.player_sprite)
 
 		for i in range(50):
-			#create taget instance
+			#create target instance
 			target=arcade.Sprite("img/target.png", SPRITE_SCALING / 3)
 			#target positions :)
 			target.center_x= random.randrange(SCREEN_HEIGHT)
 			target.center_y= random.randrange(120, SCREEN_HEIGHT)
 
 			self.all_sprites_list.append(target)
-			self.target_list.append(taget)
+			self.target_list.append(target)
 
 			arcade.set_backgroung_color(arcade.AMAZON)
 	def on_draw(self):
@@ -67,7 +67,24 @@ class TheGame(arcade.Window):
 
 		self.all_sprites_list.append(Bullet)
 		self.bullet_list.append(bullet)
-		
+	def animate(self, delta_time):
+		self.all_sprites_list.update()
+		for bullet in self.bullet_list:
+			hit_list= arcade.check_for_collision_with_list(bullet, self, target_list)
+			#if hit successful kill the bullet
+			if len(hit_list)> 0:
+				bullet.kill()
+			if target in hit_list:
+				target.kill()
+				self.score+=1
+			if bullet.botton > SCREEN_HEIGHT:
+				bullet.kill()
+
+window=TheGame(SCREEN_WIDTH, SCREEN_HEIGHT)
+window.setup()
+arcade.run()
+
+
 
 
 
